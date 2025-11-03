@@ -75,6 +75,10 @@ int main()
             cin >> typeTransport;
             if ((typeTransport > 7) || (typeTransport < 0)) {
                 cout << "Выбрано несуществующее транспортное средство\n";
+            }else if((typeTransport>0)&&(typeTransport<8)){
+                ;
+            }else{
+                ;
             };
         };
     };
