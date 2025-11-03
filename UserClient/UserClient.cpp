@@ -3,6 +3,10 @@
 #include "../KursovayaVSDLL/lib.h"
 using namespace std;
 
+void addTransport(int typeTransport) {
+    cout << endl;
+};
+
 int main()
 {
     /*camel Verbluzhka("Verbluzhka");
@@ -21,8 +25,9 @@ int main()
     int distanceLength = 0; //-- Длина дистанции (положительная);
     int selectTransport = 0; //-- Разрешение на выбор транспорта;
     int typeTransport = 0; //-- Тип транспортного средства;
-    vector<int>vehicles{}; //-- Набор транспортных средств (изначально пустой);
-
+    vector<string>vehicles{ "1. Ботинки-вездеходы",  "2. Метла", "3. Верблюд", "4. Кентавр", "5. Орёл", "6. Верблюд-быстроход", "7. Ковёр-самолёт" }; //-- Набор транспортных средств;
+    vector<int>ourVehicles{100}; //-- Пользовательский набор транспортных средств (изначальное значение);
+    
     while (true) { //-- Основной цикл программы;
         cout << "Добро пожаловать в гоночный симулятор!\n"; //-- Вступительная речь;
         while (true) { //-- Цикл выбора типа гонки;
@@ -31,16 +36,16 @@ int main()
             cout << "3. Гонка для наземного и воздушного транспорта\n";
             cout << "Выберите тип гонки: ";
             cin >> typeOfRace;
-            if ((typeOfRace == 1) || (typeOfRace == 2) || (typeOfRace == 3)) {
-                if (typeOfRace == 1) {
-                    nameRace = "наземного";
-                }
-                else if (typeOfRace == 2) {
-                    nameRace = "воздушного";
-                }
-                else {
-                    nameRace = "наземно - воздушного";
-                };
+            if (typeOfRace == 1) {
+                nameRace = "наземного";
+                break;
+            };
+            if (typeOfRace == 2) {
+                nameRace = "воздушного";
+                break;
+            };
+            if (typeOfRace == 3) {
+                nameRace = "наземно-воздушного";
                 break;
             };
             cout << "Неправильно выбранный тип гонки!\n";
@@ -65,45 +70,20 @@ int main()
         };
         while (true) { //-- Цикл выбора транспортных средств для гонки;
             cout << "Гонка для "<<nameRace<<" транспорта. Расстояние: "<<distanceLength<<endl;
-            cout << "1. Ботинки-вездеходы\n";
-            cout << "2. Метла\n";
-            cout << "3. Верблюд\n";
-            cout << "4. Кентавр\n";
-            cout << "5. Орёл\n";
-            cout << "6. Верблюд-быстроход\n";
-            cout << "7. Ковёр-самолёт\n";
+            for (int i = 0; i < vehicles.size(); ++i) { cout << vehicles[i] << endl; };
             cout << "0. Закончить регистрацию\n";
             cout << "Выберите транспорт или 0 для окончания процесса регистрации: ";
             cin >> typeTransport;
-            if ((typeTransport > 7) || (typeTransport < 0)) { //-- Если трансп. средст. больше 7 и меньше 0...
-                cout << "Выбрано несуществующее транспортное средство\n"; //-- ...то нет такого трансп. средства! Всё заново
-            }else if((typeTransport>0)&&(typeTransport<8)){ //-- Иначе если трансп. средст. больше 0 и меньше 8, то...
-                if (typeOfRace == 1) { //-- если тип гонки наземная, то...
-                    if (typeTransport == 2 || typeTransport == 5 || typeTransport == 7) { //-если метла, орёл или ковёр...
-                        cout<<"Неправильный тип трансп. ср-ва!"; //-то выдать ошибку
-                    }
-                    else { //- но если не метла, не орёл и не ковёр...
-                        vehicles.push_back(typeTransport); //- ...зачислить тр. ср.
-                    };
-                }
-                else if (typeOfRace == 2) { //-- но, если тип гонки воздушная, то...
-                    if (typeTransport == 2 || typeTransport == 5 || typeTransport == 7) { //-если метла, орёл или ковёр...
-                        vehicles.push_back(typeTransport); //-то зачислить тр. ср.
-                    }
-                    else { //-но если не метла, не орёл и не ковёр...
-                        cout << "Неправильный тип трансп. ср-ва!"; //- ...выдать ошибку
-                    };
-                }
-                else { //-но, если тип гонки смешанная...
-                    vehicles.push_back(typeTransport); //-...зачислить все транспортные ср-ва.
-                };
-            }else{ //-иначе если транс. ср. =0, то...
-                if (...) { //- если выбрано 2 тр. ср-вв...
-                    break; //-...завершать цикл выбора транспортных ср-вв.
-                }else{//-если меньше чем 2, выдавать ошибку и ...
-                    ;//-...возвращаться к выбору тр.с.
-                };
-            };
+            bool air = ((typeOfRace == 2) && ((typeTransport == 2) || (typeTransport == 5) || (typeTransport == 7)));
+            bool terrestrial = ((typeOfRace == 1) && ((typeTransport == 1) || (typeTransport == 3) || (typeTransport == 4) || (typeTransport == 6)));
+            bool airTerrestrial = ((typeOfRace == 3) && ((typeTransport > 0) && (typeTransport < 8)));
+            bool errorTypeTransport = ((typeTransport < 0) || (typeTransport > 7));
+            bool breakSelectTransport = (typeTransport == 0);
+            bool errorTransport = ((!breakSelectTransport) && (!errorTypeTransport) && (!airTerrestrial) && (!terrestrial) && (!air));
+            if (errorTypeTransport) { cout << "Выбран несуществующий транспорт!\n"; continue; };
+            if (errorTransport) { cout << "Попытка зарегистрировать неправильный тип транспортного средства!\n"; continue; };
+            if (breakSelectTransport) { break; };
+            if (air || terrestrial || airTerrestrial) { addTransport(typeTransport); continue; };
         };
     };
 
