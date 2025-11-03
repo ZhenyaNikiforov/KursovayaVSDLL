@@ -16,6 +16,7 @@ int main()
     setlocale(LC_ALL, "Russian"); //-- русский язык в консоли;
 
     int typeOfRace = 0; //-- Тип гонки (1, 2 или 3);
+    string nameRace = ""; //-- Имя гонки (наземная, воздушная или наземно-воздушная);
     int distanceLength = 0; //-- Длина дистанции (положительная);
     int selectTransport = 0; //-- Разрешение на выбор транспорта;
     int typeTransport = 0; //-- Тип транспортного средства;
@@ -29,6 +30,15 @@ int main()
             cout << "Выберите тип гонки: ";
             cin >> typeOfRace;
             if ((typeOfRace == 1) || (typeOfRace == 2) || (typeOfRace == 3)) {
+                if (typeOfRace == 1) {
+                    nameRace = "наземного";
+                }
+                else if (typeOfRace == 2) {
+                    nameRace = "воздушного";
+                }
+                else {
+                    nameRace = "наземно - воздушного";
+                };
                 break;
             };
             cout << "Неправильно выбранный тип гонки!\n";
@@ -52,6 +62,7 @@ int main()
             cout << "Ввод неправильного числа.\n";
         };
         while (true) { //-- Цикл выбора транспортных средств для гонки;
+            cout << "Гонка для "<<nameRace<<" транспорта. Расстояние: "<<distanceLength<<endl;
             cout << "1. Ботинки-вездеходы\n";
             cout << "2. Метла\n";
             cout << "3. Верблюд\n";
