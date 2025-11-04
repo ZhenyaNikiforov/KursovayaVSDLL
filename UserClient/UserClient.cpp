@@ -3,10 +3,6 @@
 #include "../KursovayaVSDLL/lib.h"
 using namespace std;
 
-void addTransport(int typeTransport) {
-    cout << endl;
-};
-
 int main()
 {
     /*camel Verbluzhka("Verbluzhka");
@@ -25,7 +21,7 @@ int main()
     int distanceLength = 0; //-- Длина дистанции (положительная);
     int selectTransport = 0; //-- Разрешение на выбор транспорта;
     int typeTransport = 0; //-- Тип транспортного средства;
-    vector<string>vehicles{ "1. Ботинки-вездеходы",  "2. Метла", "3. Верблюд", "4. Кентавр", "5. Орёл", "6. Верблюд-быстроход", "7. Ковёр-самолёт" }; //-- Набор транспортных средств;
+    vector<string>vehicles{ "", "1. Ботинки-вездеходы",  "2. Метла", "3. Верблюд", "4. Кентавр", "5. Орёл", "6. Верблюд-быстроход", "7. Ковёр-самолёт" }; //-- Набор транспортных средств;
     vector<int>ourVehicles{100}; //-- Пользовательский набор транспортных средств (изначальное значение);
     
     while (true) { //-- Основной цикл программы;
@@ -77,13 +73,18 @@ int main()
             bool air = ((typeOfRace == 2) && ((typeTransport == 2) || (typeTransport == 5) || (typeTransport == 7)));
             bool terrestrial = ((typeOfRace == 1) && ((typeTransport == 1) || (typeTransport == 3) || (typeTransport == 4) || (typeTransport == 6)));
             bool airTerrestrial = ((typeOfRace == 3) && ((typeTransport > 0) && (typeTransport < 8)));
-            bool errorTypeTransport = ((typeTransport < 0) || (typeTransport > 7));
             bool breakSelectTransport = (typeTransport == 0);
-            bool errorTransport = ((!breakSelectTransport) && (!errorTypeTransport) && (!airTerrestrial) && (!terrestrial) && (!air));
-            if (errorTypeTransport) { cout << "Выбран несуществующий транспорт!\n"; continue; };
+            bool errorTransport = ((!breakSelectTransport) && (!airTerrestrial) && (!terrestrial) && (!air));
             if (errorTransport) { cout << "Попытка зарегистрировать неправильный тип транспортного средства!\n"; continue; };
             if (breakSelectTransport) { break; };
-            if (air || terrestrial || airTerrestrial) { addTransport(typeTransport); continue; };
+            if (air || terrestrial || airTerrestrial) { 
+                bool coincidence = false; 
+                for (int i = 0; i < ourVehicles.size(); ++i) {  
+                    if (ourVehicles[i] == typeTransport) { coincidence = true; break; }
+                };
+                if (coincidence) { cout << "Ошибка! " << vehicles[typeTransport] << " уже есть!\n"; }
+                else { ourVehicles.push_back(typeTransport); cout << "Добавлен " << vehicles[typeTransport] << endl; };
+            };
         };
     };
 
