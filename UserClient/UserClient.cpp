@@ -66,6 +66,11 @@ int main()
         };
         while (true) { //-- Цикл выбора транспортных средств для гонки;
             cout << "Гонка для "<<nameRace<<" транспорта. Расстояние: "<<distanceLength<<endl;
+            if (ourVehicles.size() > 1) {
+                cout << "Выбраны: ";
+                for (int i = 1; i < ourVehicles.size(); ++i) { cout << vehicles[ourVehicles[i]]<<" "; };
+                cout << endl;
+            };
             for (int i = 0; i < vehicles.size(); ++i) { cout << vehicles[i] << endl; };
             cout << "0. Закончить регистрацию\n";
             cout << "Выберите транспорт или 0 для окончания процесса регистрации: ";
