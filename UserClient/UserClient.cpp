@@ -54,43 +54,49 @@ int main()
             };
             cout << "Отрицательная длина дистанции!\n";
         };
-        cout << "Должно быть зарегистрировано хотя бы два транспортных средства\n";
-        while (true) { //-- Цикл разрешения выбора транспорта;
-            cout << "1. Зарегистрировать транспорт\n";
-            cout << "Выберите действие: ";
-            cin >> selectTransport;
-            if (selectTransport == 1) {
-                break;
+        while (true) { //- общий цикл проведения гонки;
+            while (true) { //-- Цикл разрешения выбора транспорта;
+                bool registration = true;
+                if (ourVehicles.size() < 3) { registration = false; };
+                if (!registration) { cout << "Должно быть зарегистрировано хотя бы два транспортных средства\n"; };
+                cout << "1. Зарегистрировать транспорт\n";
+                if (registration) { cout << "2. Начать гонку\n"; }
+                cout << "Выберите действие: ";
+                cin >> selectTransport;
+                if (selectTransport == 1) { break; }
+                else if ((selectTransport == 2) && (registration)) { break; }
+                else { cout << "Ввод неправильного числа.\n"; };
             };
-            cout << "Ввод неправильного числа.\n";
-        };
-        while (true) { //-- Цикл выбора транспортных средств для гонки;
-            cout << "Гонка для "<<nameRace<<" транспорта. Расстояние: "<<distanceLength<<endl;
-            if (ourVehicles.size() > 1) {
-                cout << "Выбраны: ";
-                for (int i = 1; i < ourVehicles.size(); ++i) { cout << vehicles[ourVehicles[i]]<<" "; };
-                cout << endl;
-            };
-            for (int i = 0; i < vehicles.size(); ++i) { cout << vehicles[i] << endl; };
-            cout << "0. Закончить регистрацию\n";
-            cout << "Выберите транспорт или 0 для окончания процесса регистрации: ";
-            cin >> typeTransport;
-            bool air = ((typeOfRace == 2) && ((typeTransport == 2) || (typeTransport == 5) || (typeTransport == 7)));
-            bool terrestrial = ((typeOfRace == 1) && ((typeTransport == 1) || (typeTransport == 3) || (typeTransport == 4) || (typeTransport == 6)));
-            bool airTerrestrial = ((typeOfRace == 3) && ((typeTransport > 0) && (typeTransport < 8)));
-            bool breakSelectTransport = (typeTransport == 0);
-            bool errorTransport = ((!breakSelectTransport) && (!airTerrestrial) && (!terrestrial) && (!air));
-            if (errorTransport) { cout << "Попытка зарегистрировать неправильный тип транспортного средства!\n"; continue; };
-            if (breakSelectTransport) { break; };
-            if (air || terrestrial || airTerrestrial) { 
-                bool coincidence = false; 
-                for (int i = 0; i < ourVehicles.size(); ++i) {  
-                    if (ourVehicles[i] == typeTransport) { coincidence = true; break; }
+            while (true) { //-- Цикл выбора транспортных средств для гонки;
+                cout << "Гонка для " << nameRace << " транспорта. Расстояние: " << distanceLength << endl;
+                if (ourVehicles.size() > 1) {
+                    cout << "Выбраны: ";
+                    for (int i = 1; i < ourVehicles.size(); ++i) { cout << vehicles[ourVehicles[i]] << " "; };
+                    cout << endl;
                 };
-                if (coincidence) { cout << "Ошибка! " << vehicles[typeTransport] << " уже есть!\n"; }
-                else { ourVehicles.push_back(typeTransport); cout << "Добавлен " << vehicles[typeTransport] << endl; };
+                for (int i = 0; i < vehicles.size(); ++i) { cout << vehicles[i] << endl; };
+                cout << "0. Закончить регистрацию\n";
+                cout << "Выберите транспорт или 0 для окончания процесса регистрации: ";
+                cin >> typeTransport;
+                bool air = ((typeOfRace == 2) && ((typeTransport == 2) || (typeTransport == 5) || (typeTransport == 7)));
+                bool terrestrial = ((typeOfRace == 1) && ((typeTransport == 1) || (typeTransport == 3) || (typeTransport == 4) || (typeTransport == 6)));
+                bool airTerrestrial = ((typeOfRace == 3) && ((typeTransport > 0) && (typeTransport < 8)));
+                bool breakSelectTransport = (typeTransport == 0);
+                bool errorTransport = ((!breakSelectTransport) && (!airTerrestrial) && (!terrestrial) && (!air));
+                if (errorTransport) { cout << "Попытка зарегистрировать неправильный тип транспортного средства!\n"; continue; };
+                if (breakSelectTransport) { break; };
+                if (air || terrestrial || airTerrestrial) {
+                    bool coincidence = false;
+                    for (int i = 0; i < ourVehicles.size(); ++i) {
+                        if (ourVehicles[i] == typeTransport) { coincidence = true; break; }
+                    };
+                    if (coincidence) { cout << "Ошибка! " << vehicles[typeTransport] << " уже есть!\n"; }
+                    else { ourVehicles.push_back(typeTransport); cout << "Добавлен " << vehicles[typeTransport] << endl; };
+                };
             };
-        };
+        }
+        
+        
     };
 
     return 0;
