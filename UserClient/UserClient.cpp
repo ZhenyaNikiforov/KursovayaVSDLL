@@ -33,6 +33,9 @@ int main()
     eaglePtr = &flyCar;
     cout << eaglePtr->calcTime(4500) << endl;
 
+    broom bro;
+    eaglePtr = &bro;
+    cout << eaglePtr->calcTime(4500) << endl;
     //boot.showBoots();
     //delete camelPtr;
     /*speedCamel spCam;

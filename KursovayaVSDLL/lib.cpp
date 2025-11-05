@@ -109,3 +109,14 @@ double flyingCarpet::calcTime(double distantion) {
 	if (distantion >= 10000) { return distantion * 0.95 / this->speed; }
 	return 0;
 }
+
+double broom::calcTime(double distantion) {
+	std::cout << "dist: " << distantion << " skor.speed " << this->speed<<std::endl;
+	double thousands = distantion / 1000;
+	std::cout << "skolko tyisach: " << thousands << std::endl;
+	int integerThousands = static_cast<int>(thousands);
+	std::cout << "cselyie tyisyachi: " << integerThousands << std::endl;
+	double koeff = ((100 - integerThousands)*0.01);
+	std::cout << "koef: " << koeff << std::endl;
+	return distantion * koeff / speed;
+}
