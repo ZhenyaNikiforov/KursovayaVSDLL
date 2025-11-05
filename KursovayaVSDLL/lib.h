@@ -38,6 +38,33 @@ protected:
 
 class KURSOVAYAVSDLL_API boots:public kentauros {
 public:
-	boots() {};
+	boots(double speed = 6, double timeBeforeRest = 60, double firstRest = 10, double secondRest = 5):kentauros(speed, timeBeforeRest, firstRest) {};
+	void showBoots();
+	double calcTime(double distantion) override;
 protected:
+	double secondRest = 5;
+};
+
+class KURSOVAYAVSDLL_API eagle {
+public:
+	eagle(double speed = 8) {};
+	virtual double calcTime(double distantion);
+protected:
+	double speed = 8;
+};
+
+class KURSOVAYAVSDLL_API flyingCarpet :public eagle {
+public:
+	flyingCarpet(double speed = 10) :eagle(speed) {};
+	double calcTime(double distantion) override;
+protected:
+	double speed = 10;
+};
+
+class KURSOVAYAVSDLL_API broom :public eagle {
+public:
+	broom(double speed = 20) :eagle(speed) {};
+	double calcTime(double distantion) override;
+protected:
+	double speed = 20;
 };

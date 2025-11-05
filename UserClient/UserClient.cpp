@@ -19,6 +19,21 @@ int main()
 
     kentauros kent;
     cout<<kent.calcTime(4500)<<endl;
+
+    kentauros* kentaurosPtr;
+    boots boot;
+    kentaurosPtr = &boot;
+    cout << kentaurosPtr->calcTime(4500) << std::endl;
+
+    eagle eag;
+    cout << eag.calcTime(4500) << endl;
+
+    eagle* eaglePtr;
+    flyingCarpet flyCar;
+    eaglePtr = &flyCar;
+    cout << eaglePtr->calcTime(4500) << endl;
+
+    //boot.showBoots();
     //delete camelPtr;
     /*speedCamel spCam;
     cout << spCam.calcTime(4500) << endl;

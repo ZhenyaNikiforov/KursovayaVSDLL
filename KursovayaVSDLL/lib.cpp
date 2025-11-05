@@ -70,3 +70,42 @@ double kentauros::calcTime(double distantion) {
 	int intStops = static_cast<int>(stops);
 	return time + intStops * this->firstRest;
 }
+
+void boots::showBoots() {
+	std::cout << "skor. = " << this->speed << " vrem do ot " << this->timeBeforeRest << " ost1 " << this->firstRest << " ost2 " << this->secondRest << std::endl;
+};
+
+double boots::calcTime(double distantion) {
+	std::cout << "rasstoyanie " << distantion << std::endl;
+	std::cout << "skor. " << this->speed << std::endl;
+	double time = distantion / this->speed;
+	std::cout << "vremya " << time << std::endl;
+	if (time <= this->timeBeforeRest) {
+		return time;
+	};
+	if (std::fmod(time, this->timeBeforeRest) == 0) {
+		double stops = time / this->timeBeforeRest - 1;
+		return time + (stops - 1) * this->secondRest + 1 * this->firstRest;
+	}
+	double stops = time / this->timeBeforeRest;
+	int intStops = static_cast<int>(stops);
+	return time + (intStops - 1) * this->secondRest + 1 * this->firstRest;
+};
+
+/*eagle::eagle(double speed) {
+	this->speed = speed;
+}*/
+
+double eagle::calcTime(double distantion) {
+	std::cout << "dist: " << distantion << " speed(skor.)= " << this->speed << std::endl;
+	return distantion * 0.94 / this->speed;
+}
+
+double flyingCarpet::calcTime(double distantion) {
+	std::cout << "dist: " << distantion << " speed.skor= " << this->speed << std::endl;
+	if (distantion < 1000) { return distantion / this->speed; }
+	if ((distantion >= 1000) && (distantion < 5000)) { return distantion * 0.97 / this->speed; }
+	if ((distantion >= 5000) && (distantion < 10000)) { return distantion * 0.9 / this->speed; }
+	if (distantion >= 10000) { return distantion * 0.95 / this->speed; }
+	return 0;
+}
