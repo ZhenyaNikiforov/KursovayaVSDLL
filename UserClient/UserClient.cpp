@@ -12,6 +12,19 @@ int main()
     cout << cam.calcTime(4501) << endl;
     cout << cam.calcTime(29) << endl;
 
+    camel* camelPtr;
+    speedCamel spCam;
+    camelPtr = &spCam;
+    cout<<camelPtr->calcTime(4500)<<endl;
+
+    kentauros kent;
+    cout<<kent.calcTime(4500)<<endl;
+    //delete camelPtr;
+    /*speedCamel spCam;
+    cout << spCam.calcTime(4500) << endl;
+    cout << spCam.calcTime(4501) << endl;
+    cout << spCam.calcTime(29) << endl;*/
+
     int typeOfRace = 0; //-- Тип гонки (1, 2 или 3);
     std::string nameRace = ""; //-- Имя гонки (наземная, воздушная или наземно-воздушная);
     int distanceLength = 0; //-- Длина дистанции (положительная);
