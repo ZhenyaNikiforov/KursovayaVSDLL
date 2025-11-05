@@ -9,21 +9,18 @@
 
 class KURSOVAYAVSDLL_API camel {
 public:
-	camel(std::string camelName);
-	std::string namePrint();
+	camel(double speed = 10, double timeBeforeRest = 30, double firstRest = 5, double secondRest = 8 );
+	double calcTime(double distantion);
 protected:
-	std::string name;
+	double speed = 0;
+	double timeBeforeRest = 0;
+	double firstRest = 0;
+	double secondRest = 0;
 };
 
-class KURSOVAYAVSDLL_API dog {
+class KURSOVAYAVSDLL_API speedCamel:public camel {
 public:
-	dog(std::string dogName);
-	std::string namePrint();
+	speedCamel(double speed = 40, double timeBeforeRest = 10, double firstRest = 5, double secondRest = 6.5) : camel(speed, timeBeforeRest, firstRest, secondRest){};
 protected:
-	std::string name;
-};
-
-class KURSOVAYAVSDLL_API cat : public dog {
-public:
-	cat(std::string dogName) :dog(dogName) {};
+	double nextRest = 8;
 };

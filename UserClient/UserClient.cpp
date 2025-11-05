@@ -5,16 +5,12 @@ using namespace std;
 
 int main()
 {
-    /*camel Verbluzhka("Verbluzhka");
-    std::cout << Verbluzhka.namePrint() << std::endl;
-
-    dog Sobachka("Sobachka");
-    std::cout << Sobachka.namePrint() << std::endl;
-
-    cat Koshechka("Koshechka");
-    std::cout << Koshechka.namePrint() << std::endl;*/
-
     setlocale(LC_ALL, "Russian"); //-- русский язык в консоли;
+
+    camel cam;
+    cout << cam.calcTime(4500) << endl;
+    cout << cam.calcTime(4501) << endl;
+    cout << cam.calcTime(29) << endl;
 
     int typeOfRace = 0; //-- Тип гонки (1, 2 или 3);
     std::string nameRace = ""; //-- Имя гонки (наземная, воздушная или наземно-воздушная);
