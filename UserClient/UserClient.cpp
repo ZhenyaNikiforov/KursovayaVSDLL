@@ -26,19 +26,10 @@ int main()
     eagle* indicatorForBroom; //- указатель на орла для метлы
     indicatorForBroom = &runningBroom; //- ссылка с экземпляра метлы на указатель
 
-    /*- Запускаем методы расчёта времени у экземпляров -*/
-    cout <<"Верблюд: "<< runningCamel.calcTime(4500) << endl; //-- отображение результатов верблюда
-    cout<<"Быстр. верблюд: " << camelClassIndicator->calcTime(4500) << endl; //- отображение быст. верб. через указатель
-    cout<<"Кентавр: " << runningKentauros.calcTime(4500) << endl; //-- Отображение результатов кентавра
-    cout <<"Ботинки: " << kentaurosClassIndicator->calcTime(4500) << std::endl; //- отображение результатов ботинок
-    cout <<"Орёл: " << runningEagle.calcTime(4500) << endl; //- отображение результатов орла
-    cout <<"Летающий ковёр: " <<indicatorForCarpet->calcTime(4500)<< endl; //- отображение результатов ковра
-    cout <<"Метла: " <<indicatorForBroom->calcTime(4500)<< endl; //- отображение результатов метлы
-
     /*- Инициализируем переменные основного цикла программы -*/
     int typeOfRace = 0; //-- Тип гонки (1, 2 или 3);
     std::string nameRace = ""; //-- Имя гонки (наземная, воздушная или наземно-воздушная);
-    int distanceLength = 0; //-- Длина дистанции (положительная);
+    double distanceLength = 0; //-- Длина дистанции (положительная);
     int selectTransport = 0; //-- Разрешение на выбор транспорта;
     int typeTransport = 0; //-- Тип транспортного средства;
     /*-- Набор названий транспортных средств будем использовать в качестве ассоциативного кэша --*/
@@ -114,7 +105,16 @@ int main()
             if (startRace) {//-если флаг старта гонки startRace поднят
                 //-производим гонку;
                 cout << "Результаты гонки:\n";//выводим результаты гонки
-                //--...;
+                for (int i = 0; i < ourVehicles.size(); ++i) {
+                    if (ourVehicles[i] == 1) { cout << "1. Ботинки: " << kentaurosClassIndicator->calcTime(distanceLength) << std::endl; }; //- отображение результатов ботинок
+                    if (ourVehicles[i] == 2) { cout << "2. Метла: " << indicatorForBroom->calcTime(distanceLength) << endl; };//- отображение результатов метлы 
+                    if (ourVehicles[i] == 3) { cout << "3. Верблюд: " << runningCamel.calcTime(distanceLength) << endl; };//-- отображение результатов верблюда
+                    if (ourVehicles[i] == 4) { cout << "4. Кентавр: " << runningKentauros.calcTime(distanceLength) << endl; }; //-- Отображение результатов кентавра
+                    if (ourVehicles[i] == 5) { cout << "5. Орёл: " << runningEagle.calcTime(distanceLength) << endl; };//- отображение результатов орла 
+                    if (ourVehicles[i] == 6) { cout << "6. Быстр. верблюд: " << camelClassIndicator->calcTime(distanceLength) << endl; };//- отображение быст. верб. через указатель 
+                    if (ourVehicles[i] == 7) { cout << "7. Летающий ковёр: " << indicatorForCarpet->calcTime(distanceLength) << endl;  };//- отображение результатов ковра
+                }
+                cout << endl;//--пустая строка...;
                 while (true) {//-цикл выбора дальнейших действий:
                     int action = 0;
                     cout << "1. Произвести новую гонку\n";
