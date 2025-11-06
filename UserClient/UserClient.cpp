@@ -7,42 +7,35 @@ int main()
 {
     setlocale(LC_ALL, "Russian"); //-- русский язык в консоли;
 
-    camel cam;
-    cout << cam.calcTime(4500) << endl;
-    cout << cam.calcTime(4501) << endl;
-    cout << cam.calcTime(29) << endl;
+    /*- Создаём экземпляры классов -*/
+    camel runningCamel; //-- Экземпляр верблюда;
+    speedCamel runningSpeedCamel; //-- экземпляр быстрого верблюда
+    kentauros runningKentauros; //-- Экземпляр кентавра;
+    boots runningBoots; //- экземпляр ботинок
+    eagle runningEagle; //- экземпляр орла;
+    flyingCarpet runningFlyingCarpet; //- экземпляр летающего ковра;
+    broom runningBroom; //- экземпляр метлы;
 
-    camel* camelPtr;
-    speedCamel spCam;
-    camelPtr = &spCam;
-    cout<<camelPtr->calcTime(4500)<<endl;
+    /*- Создаём указатели и ссылки -*/
+    camel* camelClassIndicator; //-- указатель на класс верблюда
+    camelClassIndicator = &runningSpeedCamel; //- ссылка с экземрляра быст. верб. на указатель
+    kentauros* kentaurosClassIndicator; //- Указатель на класс кентавра
+    kentaurosClassIndicator = &runningBoots; //- ссылка с экземпляра ботинок на на указатель
+    eagle* indicatorForCarpet; //- указатель на орла для ковра
+    indicatorForCarpet = &runningFlyingCarpet; //- ссылка с экземпляра ковра на указатель
+    eagle* indicatorForBroom; //- указатель на орла для метлы
+    indicatorForBroom = &runningBroom; //- ссылка с экземпляра метлы на указатель
 
-    kentauros kent;
-    cout<<kent.calcTime(4500)<<endl;
+    /*- Запускаем методы расчёта времени у экземпляров -*/
+    cout <<"Верблюд: "<< runningCamel.calcTime(4500) << endl; //-- отображение результатов верблюда
+    cout<<"Быстр. верблюд: " << camelClassIndicator->calcTime(4500) << endl; //- отображение быст. верб. через указатель
+    cout<<"Кентавр: " << runningKentauros.calcTime(4500) << endl; //-- Отображение результатов кентавра
+    cout <<"Ботинки: " << kentaurosClassIndicator->calcTime(4500) << std::endl; //- отображение результатов ботинок
+    cout <<"Орёл: " << runningEagle.calcTime(4500) << endl; //- отображение результатов орла
+    cout <<"Летающий ковёр: " <<indicatorForCarpet->calcTime(4500)<< endl; //- отображение результатов ковра
+    cout <<"Метла: " <<indicatorForBroom->calcTime(4500)<< endl; //- отображение результатов метлы
 
-    kentauros* kentaurosPtr;
-    boots boot;
-    kentaurosPtr = &boot;
-    cout << kentaurosPtr->calcTime(4500) << std::endl;
-
-    eagle eag;
-    cout << eag.calcTime(4500) << endl;
-
-    eagle* eaglePtr;
-    flyingCarpet flyCar;
-    eaglePtr = &flyCar;
-    cout << eaglePtr->calcTime(4500) << endl;
-
-    broom bro;
-    eaglePtr = &bro;
-    cout << eaglePtr->calcTime(4500) << endl;
-    //boot.showBoots();
-    //delete camelPtr;
-    /*speedCamel spCam;
-    cout << spCam.calcTime(4500) << endl;
-    cout << spCam.calcTime(4501) << endl;
-    cout << spCam.calcTime(29) << endl;*/
-
+    /*- Инициализируем переменные основного цикла программы -*/
     int typeOfRace = 0; //-- Тип гонки (1, 2 или 3);
     std::string nameRace = ""; //-- Имя гонки (наземная, воздушная или наземно-воздушная);
     int distanceLength = 0; //-- Длина дистанции (положительная);
@@ -57,6 +50,7 @@ int main()
     
     while (true) { //-- Основной цикл программы;
 
+        /*- Сбрасываем значения переменных при каждом пробеге по циклу -*/
         typeOfRace = 0; //-- Тип гонки (1, 2 или 3);
         nameRace = ""; //-- Имя гонки (наземная, воздушная или наземно-воздушная);
         distanceLength = 0; //-- Длина дистанции (положительная);
