@@ -33,12 +33,13 @@ int main()
     int selectTransport = 0; //-- Разрешение на выбор транспорта;
     int typeTransport = 0; //-- Тип транспортного средства;
     /*-- Набор названий транспортных средств будем использовать в качестве ассоциативного кэша --*/
-    std::vector<string>vehicles{ "1. Ботинки-вездеходы",  "2. Метла", "3. Верблюд", "4. Кентавр", "5. Орёл", "6. Верблюд-быстроход", "7. Ковёр-самолёт" };
+    std::vector<string>vehicles{ "Ботинки-вездеходы",  "Метла", "Верблюд", "Кентавр", "Орёл", "Верблюд-быстроход", "Ковёр-самолёт" };
     std::vector<int>ourVehicles{}; //-- Пользовательский набор транспортных средств (изначальное значение);
     bool startRace = false; //-- Разрешение на запуск гонки;
     bool newRace = false; //-- Флаг новой гонки;
     bool exitRace = false; //-- Выход из гонки;
     bool stop = false; //-- Прерывание основного цикла программы;
+    std::vector<double>results{};//-- Пустой массив результатов гонки (времён прибытия транс. средств);
     
     while (true) { //-- Основной цикл программы;
 
@@ -54,6 +55,7 @@ int main()
         newRace = false; //-- Флаг новой гонки;
         exitRace = false; //-- Выход из гонки;
         stop = false; //-- Прерывание основного цикла программы;
+        results.clear();//-- Массив результатов гонки (очищаем);
 
         cout << "Добро пожаловать в гоночный симулятор!\n"; //-- Вступительная речь;
 
@@ -104,16 +106,17 @@ int main()
             };
             if (startRace) {//-если флаг старта гонки startRace поднят
                 //-производим гонку;
+                for (int i = 0; i < ourVehicles.size(); ++i) {//Заносим результаты гонки в массив
+                    if (ourVehicles[i] == 1) { results.push_back(kentaurosClassIndicator->calcTime(distanceLength)); };//результаты ботинок
+                    if (ourVehicles[i] == 2) { results.push_back(indicatorForBroom->calcTime(distanceLength)); };//результаты метлы 
+                    if (ourVehicles[i] == 3) { results.push_back(runningCamel.calcTime(distanceLength)); };//результаты верблюда
+                    if (ourVehicles[i] == 4) { results.push_back(runningKentauros.calcTime(distanceLength)); }; //результаты кентавра
+                    if (ourVehicles[i] == 5) { results.push_back(runningEagle.calcTime(distanceLength)); };//результаты орла 
+                    if (ourVehicles[i] == 6) { results.push_back(camelClassIndicator->calcTime(distanceLength)); };//результаты быст. верб. 
+                    if (ourVehicles[i] == 7) { results.push_back(indicatorForCarpet->calcTime(distanceLength)); };//результаты ковра
+                };//-занесли результаты только тех тран. ср-в, к-рые участвовали в гонке;
                 cout << "Результаты гонки:\n";//выводим результаты гонки
-                for (int i = 0; i < ourVehicles.size(); ++i) {
-                    if (ourVehicles[i] == 1) { cout << "1. Ботинки: " << kentaurosClassIndicator->calcTime(distanceLength) << std::endl; }; //- отображение результатов ботинок
-                    if (ourVehicles[i] == 2) { cout << "2. Метла: " << indicatorForBroom->calcTime(distanceLength) << endl; };//- отображение результатов метлы 
-                    if (ourVehicles[i] == 3) { cout << "3. Верблюд: " << runningCamel.calcTime(distanceLength) << endl; };//-- отображение результатов верблюда
-                    if (ourVehicles[i] == 4) { cout << "4. Кентавр: " << runningKentauros.calcTime(distanceLength) << endl; }; //-- Отображение результатов кентавра
-                    if (ourVehicles[i] == 5) { cout << "5. Орёл: " << runningEagle.calcTime(distanceLength) << endl; };//- отображение результатов орла 
-                    if (ourVehicles[i] == 6) { cout << "6. Быстр. верблюд: " << camelClassIndicator->calcTime(distanceLength) << endl; };//- отображение быст. верб. через указатель 
-                    if (ourVehicles[i] == 7) { cout << "7. Летающий ковёр: " << indicatorForCarpet->calcTime(distanceLength) << endl;  };//- отображение результатов ковра
-                }
+                
                 cout << endl;//--пустая строка...;
                 while (true) {//-цикл выбора дальнейших действий:
                     int action = 0;
@@ -134,10 +137,10 @@ int main()
                 cout << "Гонка для " << nameRace << " транспорта. Расстояние: " << distanceLength << endl;
                 if (ourVehicles.size() > 0) {//-если в наших трансп. ср-вах что-то есть, то...
                     cout << "Выбраны: ";//пишем: выбраны и выводим, что выбрано:
-                    for (int i = 0; i < ourVehicles.size(); ++i) { cout << vehicles[ourVehicles[i]-1] << " "; };
+                    for (int i = 0; i < ourVehicles.size(); ++i) { cout << ourVehicles[i]<<"." << vehicles[ourVehicles[i] - 1] << " "; };
                     cout << endl;
                 };
-                for (int i = 0; i < vehicles.size(); ++i) { cout << vehicles[i] << endl; };//выводим список всех ТС
+                for (int i = 0; i < vehicles.size(); ++i) { cout <<i+1 <<". " << vehicles[i] << endl; };//выводим список всех ТС
                 cout << "0. Закончить регистрацию\n";//-0 это код окончания
                 cout << "Выберите транспорт или 0 для окончания процесса регистрации: ";//постоянная фраза
                 std::cin >> typeTransport;//вводим тип транспортного средства
@@ -154,19 +157,23 @@ int main()
                 if (errorTransport) { cout << "Попытка зарегистрировать неправильный тип транспортного средства!\n"; continue; };
                 if (breakSelectTransport) { break; };//если слом цикла, то разрыв
                 if (air || terrestrial || airTerrestrial) {//если воздушный, наземный или смешанный, то...
-                    bool coincidence = false;//флаг совпадения, изначально спущен
-                    for (int i = 0; i < ourVehicles.size(); ++i) {//обходим массив избранных тр. ср-в, если он пустой, то не обходим
-                        if (ourVehicles[i] == typeTransport) { coincidence = true; break; }//если совпадение, поднимаем флаг и бросаем обход
-                        /*если совпадений нет, флаг остаётся спущенным, а если массив был пустой и мы его не обходили,
-                        то флаг тоже остаётся спущенным*/
-                    };
-                    /*если флаг совпадения поднят, то выводим ошибку повторного выбора*/
-                    if (coincidence) { cout << "Ошибка! " << vehicles[typeTransport-1] << " уже есть!\n"; }
-                    /*если флаг совп. спущен, добавляем номер типа транспорта и выводим сообщение об этом*/
-                    else { ourVehicles.push_back(typeTransport); cout << "Добавлен " << vehicles[typeTransport-1] << endl; };
-                    /*типы транспорта начинаются с 1, поэтому в 
-                    строковом массиве названий vehicles элемент 1 по индексу 0*/
-                };
+                    if (ourVehicles.size() == 0) {//-если массив избранных тран. ср-в пустой, то... 
+                        ourVehicles.push_back(typeTransport);//добавим в него тран. ср-во и...
+                        cout << "Добавлен " << typeTransport << "." << vehicles[typeTransport - 1] << endl;//выводим номер и название;
+                    }else {//иначе, если в массиве избранных тран. ср-в что-то есть, то...
+                        int i = 0;//переменная счёта;
+                        for (i = 0; i < ourVehicles.size(); ++i) {//обходим массив избранных тр. ср-в
+                            if (ourVehicles[i] == typeTransport) {//если совпадение...
+                                cout << "Ошибка! " << typeTransport << "." << vehicles[typeTransport - 1] << " уже есть." << endl;//выводим,
+                                break;//прерываем цикл;
+                            };
+                        };
+                        if (i == ourVehicles.size()) {//если массив избранных тр. ср-в дошёл до конца, а совпадений нет...
+                            ourVehicles.push_back(typeTransport);//добавляем в него избранное тран. ср-во...
+                            cout << "Добавлен " << typeTransport << "." << vehicles[typeTransport - 1] << endl;//выводим...
+                        };
+                    };//дно вопроса пустой ли массив
+                };//дно вопроса о типе гонки
             };//дно цикла выборки транспортных средств для гонки;
         }//дно общего цикла проведения гонки
         if (stop) { break; };//если поднят флаг прерывания основного цикла программы, выход из неё
